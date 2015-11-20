@@ -1,0 +1,13 @@
+[
+  {
+    "fields": {
+      "first_name": "Ed",
+      "last_name": "Stone",
+      "email_address": null,
+      "slack_username": "eadmundo",
+      "cell_number": null
+    },
+    "model": "greeter.member",
+    "pk": 1
+  }
+]
