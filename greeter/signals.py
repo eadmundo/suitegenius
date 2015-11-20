@@ -3,8 +3,9 @@ from django.dispatch import receiver
 from greeter.models import Message
 import json
 import requests
+import os
 from rq import Queue
-from redis import StrictRedis
+import redis
 from django.conf import settings
 
 
@@ -24,14 +25,14 @@ def send_message(slack_username, message):
 
 
 def get_redis():
-    return StrictRedis()
+    return redis.from_url(os.environ.get("REDIS_URL"))
 
 
 @receiver(post_save)
 def receive_message(sender, **kwargs):
     if issubclass(sender, Message):
-        redis_conn = get_redis()
-        q = Queue(connection=redis_conn)
+        conn = get_redis()
+        q = Queue(connection=conn)
         msg = kwargs['instance']
         q.enqueue(
             send_message,
