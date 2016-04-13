@@ -17,7 +17,7 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from greeter import views as greeter_views
 from rest_framework.routers import DefaultRouter
-from rest_framework.authtoken import views
+from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token
 
 # Create a router and register our viewsets with it.
 router = DefaultRouter()
@@ -29,5 +29,6 @@ router.register(r'messages', greeter_views.MessageViewSet)
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^', include(router.urls)),
-    url(r'^get-auth-token/', views.obtain_auth_token)
+    url(r'^api-token-auth/', obtain_jwt_token),
+    url(r'^api-token-refresh/', refresh_jwt_token),
 ]
